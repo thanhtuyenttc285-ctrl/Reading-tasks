@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Further Reading - Making a Wire Connection</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#5d6b82;--line:#d9e1ec;--accent:#155eef;--ok:#147a4b;--bad:#b42318;--hint:#8a5a00}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:#102a56;color:#fff;padding:20px 16px} header .wrap{max-width:980px;margin:auto}
+h1{margin:0;font-size:clamp(24px,4vw,36px)} .sub{opacity:.9;margin-top:5px}
+main{max-width:980px;margin:20px auto;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:14px 0;box-shadow:0 3px 12px rgba(20,40,80,.06)}
+.passage p{margin:0 0 14px}.tag{display:inline-block;background:#eaf1ff;color:#174ea6;padding:3px 8px;border-radius:999px;font-size:13px;font-weight:700}
+.qtitle{font-weight:700;margin-bottom:10px}.options label{display:block;border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;cursor:pointer}
+.options label:hover{background:#f7f9fc} button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;margin:8px 8px 0 0}
+.check{background:var(--accent);color:#fff}.hintbtn{background:#fff4d6;color:#684300;border:1px solid #f1d48a}.secondary{background:#e8edf5;color:#26354d}
+.feedback,.hint{margin-top:10px;padding:10px 12px;border-radius:9px;display:none}.hint{background:#fff7df;color:#6d4b00}.correct{display:block;background:#e8f7ef;color:var(--ok)}.wrong{display:block;background:#fff0ee;color:var(--bad)}
+#result{font-size:20px;font-weight:700}.toolbar{display:flex;flex-wrap:wrap;gap:4px}.review{display:none}
+.answerline{padding:9px 0;border-bottom:1px solid var(--line)} .small{font-size:14px;color:var(--muted)}
+select{width:100%;max-width:520px;padding:10px;border:1px solid var(--line);border-radius:9px;background:white;font-size:16px}
+@media(max-width:600px){.card{padding:15px}button{width:100%;margin-right:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="tag">UNIT 2 · ELECTRICAL TOOLS</div><h1>Further Reading</h1><div class="sub">Making a Wire Connection · A2–B1</div></div></header>
+<main>
+
+<section class="card" id="studentInfo">
+<h2>Student Information</h2>
+<p class="small">Enter your information before starting the activity.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px">
+<label><b>Student ID</b><input id="studentId" type="text" autocomplete="off" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:16px"></label>
+<label><b>Full Name</b><input id="fullName" type="text" autocomplete="name" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:16px"></label>
+<label><b>Class</b><input id="className" type="text" autocomplete="off" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:16px"></label>
+</div>
+<div id="studentInfoMsg" class="small" style="margin-top:10px"></div>
+</section>
+<section class="card passage">
+<h2>Preparing a Wire for Connection</h2>
+<p><b>Nam is a trainee electrician.</b> Today, he is preparing a wire for a connection in the electrical workshop. He needs three tools: <b>wire strippers, long nose pliers, and pressing pincers</b>.</p>
+<p>First, Nam uses <b>wire strippers</b> to remove the insulation from the end of the wire. He chooses the correct groove for the size of the wire. Then, he strips the insulation carefully.</p>
+<p>Next, Nam uses <b>long nose pliers</b>. He holds the end of the wire with the pliers and bends it into the correct position for the connection.</p>
+<p>Finally, Nam puts the wire into a <b>terminal</b>. He uses <b>pressing pincers</b> to press the terminal firmly onto the wire. He presses the metal part of the terminal, not the insulation.</p>
+<p>Now the wire is ready for the connection. Using the right tool for each step helps Nam prepare the wire correctly.</p>
+</section>
+
+<div id="questions"></div>
+
+<section class="card">
+<h2>Finish</h2>
+<p class="small">Answer all questions, then submit your activity.</p>
+<button class="check" onclick="submitAll()">Submit Activity</button>
+<button id="sendResultBtn" class="secondary" style="display:none" onclick="sendResult()">Submit Result to Teacher</button>
+<div id="result" style="margin-top:12px"></div>
+<div id="sendStatus" class="small" style="margin-top:8px"></div>
+<div class="toolbar">
+<button id="reviewBtn" class="secondary" style="display:none" onclick="showReview()">Review Answers</button>
+<button id="retryBtn" class="secondary" style="display:none" onclick="tryAgain()">Try Again</button>
+</div>
+</section>
+
+<section id="review" class="card review"><h2>Review Answers</h2><div id="reviewBody"></div></section>
+</main>
+<script>
+const qs=[
+{type:"mc",q:"1. What is the text mainly about?",opts:["How to repair electrical tools","How to prepare a wire for a connection","How to buy tools for an electrical workshop"],a:1,h:"Look at the first and last paragraphs. What job is Nam doing?",e:"The passage explains how Nam prepares a wire for a connection using three tools."},
+{type:"mc",q:"2. Which tool does Nam use to remove insulation?",opts:["Wire strippers","Long nose pliers","Pressing pincers"],a:0,h:"Read paragraph 2. Find the words “remove the insulation.”",e:"Wire strippers are used to remove insulation from the end of the wire."},
+{type:"tf",q:"3. Nam chooses the correct groove for the size of the wire.",opts:["True","False"],a:0,h:"Read paragraph 2 again. What does Nam choose before stripping the wire?",e:"Correct. The text says he chooses the correct groove for the size of the wire."},
+{type:"mc",q:"4. What are long nose pliers used for in the text?",opts:["Checking voltage","Holding and bending the end of the wire","Pressing the terminal"],a:1,h:"Look at paragraph 3. Focus on the two actions after “He”.",e:"Nam uses long nose pliers to hold the wire end and bend it into position."},
+{type:"mc",q:"5. What does Nam do after using long nose pliers?",opts:["He removes the insulation.","He puts the wire into a terminal.","He chooses the correct groove."],a:1,h:"Read the first sentence of paragraph 4. It describes the next step.",e:"After holding and bending the wire, Nam puts it into a terminal."},
+{type:"tf",q:"6. Nam presses the pressing pincers on the insulation.",opts:["True","False"],a:1,h:"Look at the last sentence of paragraph 4. Which part should he press?",e:"False. He presses the metal part of the terminal, not the insulation."},
+{type:"mc",q:"7. In paragraph 2, what does “strip” mean?",opts:["Remove insulation from a wire","Join two wires","Measure a wire"],a:0,h:"Use the previous sentence as a clue: Nam needs to remove something from the wire.",e:"In this context, “strip” means to remove insulation from a wire."},
+{type:"mc",q:"8. Which sequence is correct?",opts:["Press terminal → strip insulation → bend wire","Strip insulation → hold/bend wire → press terminal","Bend wire → press terminal → strip insulation"],a:1,h:"Follow the signal words: First, Next, Finally.",e:"The passage gives this order: strip the insulation, hold/bend the wire, then press the terminal."}
+];
+
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbwJuVm1-7tRjocDCdZrcPIibwVQtwhRHHWS4zwECLk3Te33RX68dqsjlpiP8_4QEIEIgQ/exec";
+let locked=false;
+let finalScore=null;
+let resultSent=false;
+function render(){
+ const root=document.getElementById("questions"); root.innerHTML="";
+ qs.forEach((x,i)=>{
+  let div=document.createElement("section"); div.className="card"; div.id="q"+i;
+  let html=`<div class="qtitle">${x.q}</div><div class="options">`;
+  x.opts.forEach((o,j)=>html+=`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`);
+  html+=`</div><button class="hintbtn" onclick="hint(${i})">Hint</button><button class="check" onclick="check(${i})">Check Answer</button>
+  <div class="hint" id="h${i}"></div><div class="feedback" id="f${i}"></div>`;
+  div.innerHTML=html; root.appendChild(div);
+ });
+}
+function hint(i){let h=document.getElementById("h"+i);h.textContent=qs[i].h;h.style.display="block"}
+function selected(i){let el=document.querySelector(`input[name=q${i}]:checked`);return el?+el.value:null}
+function check(i){
+ let f=document.getElementById("f"+i),v=selected(i);
+ if(v===null){f.className="feedback wrong";f.textContent="Choose an answer first.";return}
+ if(v===qs[i].a){f.className="feedback correct";f.textContent="Correct! "+qs[i].e}
+ else{f.className="feedback wrong";f.textContent="Try again. "+qs[i].h}
+}
+function submitAll(){
+ const studentId=document.getElementById("studentId").value.trim();
+ const fullName=document.getElementById("fullName").value.trim();
+ const className=document.getElementById("className").value.trim();
+ if(!studentId || !fullName || !className){
+   document.getElementById("studentInfoMsg").textContent="Please enter Student ID, Full Name, and Class.";
+   document.getElementById("studentInfo").scrollIntoView({behavior:"smooth"});
+   return;
+ }
+ document.getElementById("studentInfoMsg").textContent="";
+ let unanswered=qs.some((_,i)=>selected(i)===null);
+ if(unanswered){document.getElementById("result").textContent="Please answer all questions before submitting.";return}
+ finalScore=qs.reduce((s,x,i)=>s+(selected(i)===x.a?1:0),0);
+ document.getElementById("result").textContent=`Your score: ${finalScore}/${qs.length} (${Math.round(finalScore/qs.length*100)}%)`;
+ document.getElementById("reviewBtn").style.display="inline-block";
+ document.getElementById("retryBtn").style.display="inline-block";
+ document.getElementById("sendResultBtn").style.display="inline-block";
+ locked=true;
+}
+
+async function sendResult(){
+ if(finalScore===null){return}
+ if(resultSent){
+   document.getElementById("sendStatus").textContent="This result has already been submitted.";
+   return;
+ }
+ const btn=document.getElementById("sendResultBtn");
+ const status=document.getElementById("sendStatus");
+ const payload={
+   studentId:document.getElementById("studentId").value.trim(),
+   fullName:document.getElementById("fullName").value.trim(),
+   className:document.getElementById("className").value.trim(),
+   score:finalScore,
+   total:qs.length,
+   percentage:Math.round((finalScore/qs.length)*100)
+ };
+ btn.disabled=true;
+ btn.textContent="Submitting...";
+ status.textContent="Sending your result...";
+ try{
+   await fetch(WEB_APP_URL,{
+     method:"POST",
+     mode:"no-cors",
+     headers:{"Content-Type":"text/plain;charset=utf-8"},
+     body:JSON.stringify(payload)
+   });
+   resultSent=true;
+   status.textContent="Result submitted. Please do not submit again.";
+   btn.textContent="Result Submitted";
+ }catch(err){
+   status.textContent="Could not submit the result. Check your Internet connection and try again.";
+   btn.disabled=false;
+   btn.textContent="Submit Result to Teacher";
+ }
+}
+
+function showReview(){
+ let b=document.getElementById("reviewBody"); b.innerHTML="";
+ qs.forEach((x,i)=>{
+  let v=selected(i), d=document.createElement("div");d.className="answerline";
+  d.innerHTML=`<b>${x.q}</b><br>Your answer: ${v===null?"—":x.opts[v]}<br>Correct answer: <b>${x.opts[x.a]}</b><br><span class="small">${x.e}</span>`;
+  b.appendChild(d);
+ });
+ let r=document.getElementById("review");r.style.display="block";r.scrollIntoView({behavior:"smooth"});
+}
+function tryAgain(){
+ document.querySelectorAll('input[type=radio]').forEach(x=>x.checked=false);
+ document.querySelectorAll('.feedback,.hint').forEach(x=>{x.style.display="none";x.textContent=""});
+ document.getElementById("result").textContent="";
+ document.getElementById("review").style.display="none";
+ document.getElementById("reviewBtn").style.display="none";
+ document.getElementById("retryBtn").style.display="none";
+ document.getElementById("sendResultBtn").style.display="none";
+ document.getElementById("sendResultBtn").disabled=false;
+ document.getElementById("sendResultBtn").textContent="Submit Result to Teacher";
+ document.getElementById("sendStatus").textContent="";
+ finalScore=null; resultSent=false; locked=false; window.scrollTo({top:0,behavior:"smooth"});
+}
+render();
+</script>
+</body>
+</html>
