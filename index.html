@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Making a Wire Connection</title>
+<style>body{font-family:Arial,sans-serif;background:#f5f7fa;margin:0;color:#202124;line-height:1.55}.wrap{max-width:900px;margin:auto;padding:20px}.card{background:#fff;padding:22px;margin:16px 0;border-radius:12px;border:1px solid #ddd}h1{margin-bottom:4px}.muted{color:#666}.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}input[type=text]{width:100%;padding:10px;box-sizing:border-box}.q{padding:16px 0;border-top:1px solid #eee}.q:first-child{border-top:0}label{display:block;margin:7px 0}.field{font-weight:bold}button{padding:13px 22px;border:0;border-radius:8px;background:#1769d2;color:#fff;font-weight:bold;font-size:16px;cursor:pointer}button:disabled{opacity:.6}.msg{padding:12px;margin-top:14px;border-radius:8px;display:none}.err{display:block;background:#fde8e7}.wait{display:block;background:#e8f0fe}.result{text-align:center;display:none}.score{font-size:26px;font-weight:bold}@media(max-width:650px){.info{grid-template-columns:1fr}}</style></head>
+<body><main class="wrap">
+<section class="card"><h1>Further Reading: Making a Wire Connection</h1><p class="muted">Read the passage and answer all eight questions. Your score will be shown only after your result has been submitted.</p></section>
+<section class="card"><h2>Student Information</h2><div class="info"><div><span class="field">Student ID</span><input id="studentId" type="text"></div><div><span class="field">Full Name</span><input id="fullName" type="text"></div><div><span class="field">Class</span><input id="className" type="text"></div></div></section>
+<section class="card"><h2>Preparing a Wire for Connection</h2>
+<p>Nam is a trainee electrician. Today, he is preparing a wire for a connection in the electrical workshop. He needs three tools: wire strippers, long nose pliers, and pressing pincers.</p>
+<p>First, Nam uses wire strippers to remove the insulation from the end of the wire. He chooses the correct groove for the size of the wire. Then, he strips the insulation carefully.</p>
+<p>Next, Nam uses long nose pliers. He holds the end of the wire with the pliers and bends it into the correct position for the connection.</p>
+<p>Finally, Nam puts the wire into a terminal. He uses pressing pincers to press the terminal firmly onto the wire. He presses the metal part of the terminal, not the insulation.</p>
+<p>Now the wire is ready for the connection. Using the right tool for each step helps Nam prepare the wire correctly.</p></section>
+<section class="card"><h2>Reading Questions</h2>
+<div class="q"><b>1. What is the main idea of the passage?</b><label><input type="radio" name="q1" value="A"> A. How to choose tools for an electrical workshop</label><label><input type="radio" name="q1" value="B"> B. How to prepare a wire for a connection</label><label><input type="radio" name="q1" value="C"> C. How to repair damaged electrical tools</label></div>
+<div class="q"><b>2. Which tool does Nam use to remove the insulation?</b><label><input type="radio" name="q2" value="A"> A. Wire strippers</label><label><input type="radio" name="q2" value="B"> B. Long nose pliers</label><label><input type="radio" name="q2" value="C"> C. Pressing pincers</label></div>
+<div class="q"><b>3. Nam chooses the correct groove for the size of the wire.</b><label><input type="radio" name="q3" value="True"> True</label><label><input type="radio" name="q3" value="False"> False</label></div>
+<div class="q"><b>4. What does Nam use the long nose pliers for?</b><label><input type="radio" name="q4" value="A"> A. Cutting the terminal</label><label><input type="radio" name="q4" value="B"> B. Holding and bending the end of the wire</label><label><input type="radio" name="q4" value="C"> C. Removing the insulation automatically</label></div>
+<div class="q"><b>5. What does Nam do after using the long nose pliers?</b><label><input type="radio" name="q5" value="A"> A. He removes more insulation.</label><label><input type="radio" name="q5" value="B"> B. He puts the wire into a terminal.</label><label><input type="radio" name="q5" value="C"> C. He checks the groove size.</label></div>
+<div class="q"><b>6. Nam uses the pressing pincers to press the insulation.</b><label><input type="radio" name="q6" value="True"> True</label><label><input type="radio" name="q6" value="False"> False</label></div>
+<div class="q"><b>7. In the passage, what does “strip” mean?</b><label><input type="radio" name="q7" value="A"> A. Remove the insulation</label><label><input type="radio" name="q7" value="B"> B. Press the terminal</label><label><input type="radio" name="q7" value="C"> C. Measure the wire</label></div>
+<div class="q"><b>8. Which sequence is correct?</b><label><input type="radio" name="q8" value="A"> A. Press the terminal → strip the insulation → bend the wire</label><label><input type="radio" name="q8" value="B"> B. Strip the insulation → hold/bend the wire → press the terminal</label><label><input type="radio" name="q8" value="C"> C. Bend the wire → press the terminal → strip the insulation</label></div>
+</section>
+<section class="card" style="text-align:center"><button id="submit">SUBMIT TO TEACHER</button><div id="status" class="msg"></div><div id="result" class="result"><h2>Submission Complete</h2><p>Your result has been submitted to your teacher.</p><div id="score" class="score"></div><div id="pct"></div><p class="muted">Thank you. Your result has been recorded.</p></div></section>
+</main>
+<script>
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbwJuVm1-7tRjocDCdZrcPIibwVQtwhRHHWS4zwECLk3Te33RX68dqsjlpiP8_4QEIEIgQ/exec";
+const btn=document.getElementById("submit"),status=document.getElementById("status"),result=document.getElementById("result");
+let submissionId=null,submitting=false,submitted=false;
+const text=id=>document.getElementById(id).value.trim();
+const answer=q=>{const x=document.querySelector('input[name="'+q+'"]:checked');return x?x.value:""};
+function message(t,c){status.textContent=t;status.className="msg "+c}
+function lock(v){document.querySelectorAll("input").forEach(x=>x.disabled=v)}
+function fail(t){submitting=false;lock(false);btn.disabled=false;btn.textContent="SUBMIT TO TEACHER";message(t||"Your result could not be submitted. Please check your connection and try again.","err")}
+function send(payload){
+ const cb="submissionCallback_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),s=document.createElement("script");let done=false;
+ const timer=setTimeout(()=>{if(!done){done=true;cleanup();fail("No confirmation was received. Your answers are still on this page. Please try again.")}},15000);
+ function cleanup(){clearTimeout(timer);if(s.parentNode)s.remove();try{delete window[cb]}catch(e){}}
+ window[cb]=r=>{if(done)return;done=true;cleanup();
+   if(r&&r.status==="success"&&r.submissionId===payload.submissionId){submitted=true;submitting=false;lock(true);btn.disabled=true;btn.textContent="Submitted";status.style.display="none";document.getElementById("score").textContent="Score: "+r.score+" / "+r.total;document.getElementById("pct").textContent="Percentage: "+r.percentage+"%";result.style.display="block"}
+   else if(r&&r.status==="duplicate") fail("This submission has already been recorded. Please ask your teacher to check the Google Sheet.");
+   else fail(r&&r.message?r.message:null);
+ };
+ const params=new URLSearchParams({...payload,callback:cb});s.src=WEB_APP_URL+"?"+params.toString();s.onerror=()=>{if(!done){done=true;cleanup();fail()}};document.body.appendChild(s);
+}
+btn.onclick=()=>{
+ if(submitting||submitted)return;
+ if(!text("studentId")||!text("fullName")||!text("className"))return message("Please complete all student information before submitting.","err");
+ for(let i=1;i<=8;i++)if(!answer("q"+i))return message("Please answer all questions before submitting.","err");
+ if(!submissionId)submissionId=text("studentId")+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,8);
+ const p={submissionId,studentId:text("studentId"),fullName:text("fullName"),className:text("className")};
+ for(let i=1;i<=8;i++)p["q"+i]=answer("q"+i);
+ submitting=true;lock(true);btn.disabled=true;btn.textContent="Submitting...";message("Submitting your result to your teacher. Please wait...","wait");send(p);
+};
+</script></body></html>
